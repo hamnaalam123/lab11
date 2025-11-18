@@ -7,10 +7,13 @@ pipeline {
             }
         }
         stage('Test') {
-            steps {
-                echo 'Testing..'
-            }
-        }
+    when {
+        expression { return env.BRANCH_NAME == 'main' }
+    }
+    steps {
+        echo 'Testing only on main branch'
+    }
+}
         stage('Deploy') {
             steps {
                 echo 'Deploying....'
