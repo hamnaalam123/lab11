@@ -5,23 +5,23 @@ pipeline {
 }
     stages {
         stage('Build') {
-            steps {
-                echo 'Building..'
-            }
-        }
-        stage('Test') {
+    steps {
+        echo "Building version ${VERSION}"
+    }
+}
+     stage('Test') {
     when {
-        expression { return env.BRANCH_NAME == 'main' }
+        expression { return params.executeTests }
     }
     steps {
-        echo 'Testing only on main branch'
+        echo "Testing version ${VERSION}"
     }
 }
         stage('Deploy') {
-            steps {
-                echo 'Deploying....'
-            }
-        }
+    steps {
+        echo "Deploying version ${VERSION}"
+    }
+}
     }
     post {
     always {
