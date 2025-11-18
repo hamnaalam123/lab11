@@ -17,6 +17,9 @@ pipeline {
     }
 }
      stage('Test') {
+    when {
+        expression { return params.executeTests }
+    }
     steps {
         echo "Testing version ${VERSION}"
     }
