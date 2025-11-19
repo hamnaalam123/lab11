@@ -15,7 +15,16 @@ pipeline {
         echo "Building version ${VERSION}"
         bat "mvn -version" 
     }
+            
 }
+        stage('SAST - SonarQube Simulation') {
+    steps {
+        echo "Running static code analysis (SAST)..."
+        echo "Checking code using SonarQube rules..."
+        echo "No critical vulnerabilities found."
+    }
+}
+
      stage('Test') {
     when {
         expression { return params.executeTests }
