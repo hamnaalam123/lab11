@@ -1,61 +1,59 @@
 pipeline {
+
     agent any
 
-    parameters {
-        booleanParam(name: 'executeTests', defaultValue: true, description: 'Run tests?')
-    }
 
-    environment {
-        VERSION = '1.0'
-    }
-
-    tools {
-        maven 'MAVEN_HOME'
-    }
 
     stages {
 
-        stage('Build') {
+        stage('Checkout') {
+
             steps {
-                echo "Building version ${VERSION}"
-                bat "mvn -version"
+
+                checkout scm
+
             }
+
         }
 
-        stage('SAST - SonarQube Simulation') {
+
+
+        stage('SonarQube Scan') {
+
             steps {
-                echo "Running static code analysis (SAST)..."
-                echo "Checking code using SonarQube rules..."
-                echo "No critical vulnerabilities found."
+
+                withSonarQubeEnv('SonarServer') {
+
+                    bat """
+
+                        "${tool('SonarScanner')}\\bin\\sonar-scanner.bat" ^
+
+                          -Dsonar.projectKey=secure-coding ^
+
+                          -Dsonar.sources=. ^
+
+                          -Dsonar.inclusions=/.py,/.js,/*.html
+
+                    """
+
+                }
+
             }
+
         }
 
-        stage('Test') {
-            when {
-                expression { return params.executeTests }
-            }
+
+
+        stage('Quality Gate') {
+
             steps {
-                echo "Running tests for version ${VERSION}"
+
+                waitForQualityGate abortPipeline: true   // ⬅ FIXED
+
             }
+
         }
 
-        stage('Deploy') {
-            steps {
-                echo "Deploying version ${VERSION}"
-            }
-        }
-
-        stage('Security Gate Simulation') {
-            steps {
-                echo "Evaluating security quality gate..."
-                echo "Security Gate Passed!"
-            }
-        }
     }
 
-    post {
-        always {
-            echo 'Pipeline finished.'
-        }
-    }
 }
