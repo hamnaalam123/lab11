@@ -22,7 +22,7 @@ pipeline {
 
             steps {
 
-                withSonarQubeEnv('SonarServer') {
+                withSonarQubeEnv('SonarQube') {
 
                     bat """
 
