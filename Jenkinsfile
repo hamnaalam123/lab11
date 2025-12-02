@@ -1,4 +1,3 @@
-//hamna 22i-1650
 pipeline {
     agent any
 
