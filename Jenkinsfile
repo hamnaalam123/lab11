@@ -1,5 +1,4 @@
-// Version from Bash2 – hamna alam (22i-1650)
-
+// Bash2 version – Hamna (22i-1613)
 pipeline {
     agent any
 
