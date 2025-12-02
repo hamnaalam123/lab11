@@ -1,4 +1,5 @@
-// Bash1 version – Hamna (22i-1613)
+// Bash2 version – Hamna (22i-1613)
+>>>>>>> f98780c9c7be73028cf2261ba8021907a6ff0d28
 pipeline {
     agent any
 
