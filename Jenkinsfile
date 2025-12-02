@@ -1,6 +1,4 @@
-//hamna alam
-//22i-1650
-//i am so cool
+//hamna 22i-1650
 pipeline {
     agent any
 
